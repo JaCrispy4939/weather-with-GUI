@@ -16,7 +16,7 @@ while True:
     soup_condition=BeautifulSoup(page.content,"html.parser")
     current_temperature = soup.find(class_="CurrentConditions--tempValue--3KcTQ").text
     current_state = soup_condition.find(class_="CurrentConditions--phraseValue--2xXSr").text
-    current_precip = soup.find(class_="CurrentConditions--precipValue--RBVJT")
+    current_precip = soup.find(class_="CurrentConditions--precipValue--RBVJT").text
     today = date.today()
     # dd/mm/YY
     d1 = today.strftime("%m/%d/%Y")
@@ -27,7 +27,7 @@ while True:
         global root
         root = tk.Tk()
         root.title("Weather By JaCrispy")
-        root.geometry("400x150")
+        root.geometry("500x150")
         
 
         global pass_var
