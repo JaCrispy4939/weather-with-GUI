@@ -15,39 +15,50 @@ while True:
     page = requests.get("https://weather.com/weather/today/l/57312336018afbd8918d5eefe6ccd5308696bf6d8056348868a1d39d80709a34")
     soup=BeautifulSoup(page.content,"html.parser")
     soup_condition=BeautifulSoup(page.content,"html.parser")
-    current_temperature = soup.find(class_="CurrentConditions--tempValue--3KcTQ").text
-    current_state = soup_condition.find(class_="CurrentConditions--phraseValue--2xXSr").text
-    current_precip = soup.find(class_="CurrentConditions--precipValue--RBVJT").text
-    current_highlow = soup.find(class_="CurrentConditions--tempHiLoValue--A4RQE").text
-    current_realfeel = soup.find(class_="TodayDetailsCard--feelsLikeTempValue--2aogo").text
-    sunset_time = soup.find(class_="SunriseSunset--sunsetDateItem--2_gJb SunriseSunset--sunriseDateItem--2ATeV").text
-    sunrise_time = soup.find(class_="SunriseSunset--sunriseDateItem--2ATeV").text
+    #all the web scraping classes to get the information
+    current_temperature = soup.find(class_="CurrentConditions--tempValue--MHmYY").text
+    current_state = soup_condition.find(class_="CurrentConditions--phraseValue--mZC_p").text
+    current_precip = soup.find(class_="CurrentConditions--precipValue--2aJSf").text
+    current_highlow = soup.find(class_="WeatherDetailsListItem--wxData--kK35q").text
+    current_realfeel = soup.find(class_="TodayDetailsCard--feelsLikeTempValue--2icPt").text
+    sunset_time = soup.find(class_="SunriseSunset--sunsetDateItem--1nyxW SunriseSunset--sunriseDateItem--H9yAh").text
+    sunrise_time = soup.find(class_="SunriseSunset--sunriseDateItem--H9yAh").text
+    location = soup.find(class_="CurrentConditions--location--1YWj_").text
+    
+
+    
+
+    #date and time vars
     today = date.today()
     # dd/mm/YY
     d1 = today.strftime("%m/%d/%Y")
     last_update = time.strftime("%H:%M:%S")
     
+    #tkinter window setup
     def tkinter():
         global root
         root = tk.Tk()
         root.title("Weather By JaCrispy")
         root.geometry("500x300")
         
-
+        #tkinter var setup
         global pass_var
         pass_var=tk.StringVar()
-        pass_temp = tk.Label(text= "Current Temp: " + current_temperature)
+        pass_temp = tk.Label(text= "Current Temp: " + str(current_temperature))
         pass_precip = tk.Label(text= "Rain: " + str(current_precip))
         pass_day = tk.Label(text= "Date: " + str(today))
-        pass_clouds = tk.Label(text= "Clouds: "+ current_state)
-        pass_highlow = tk.Label(text= "High/Low: " + current_highlow)
+        pass_clouds = tk.Label(text= "State: "+ str(current_state))
+        pass_highlow = tk.Label(text= "High/Low: " + str(current_highlow))
         updateButton = tk.Button(text = "Update", command = root.destroy)
         closeButton = tk.Button(text= "Close", command= quit)
-        pass_realfeal = tk.Label(text= "Real Feel: " + current_realfeel)
-        pass_time = tk.Label(text= "Last Update: " + last_update)
+        pass_realfeal = tk.Label(text= "Real Feel: " + str(current_realfeel))
+        pass_time = tk.Label(text= "Last Update: " + str(last_update))
         pass_sunset = tk.Label(text= str(sunset_time))
         pass_sunrise = tk.Label(text= str(sunrise_time))
-    
+        pass_location = tk.Label(text= location)
+        
+        #tkinter var placement 
+        pass_location.place(x=150, y=30)
         pass_sunrise.place(x= 50, y= 150)
         pass_sunset.place(x= 250, y=150)
         pass_time.place(x=250, y= 10)
@@ -56,11 +67,11 @@ while True:
         pass_precip.place(x=250, y=50)
         pass_temp.place(x=50, y= 50)
         pass_clouds.place(x=135, y=100)
-        updateButton.place(x=175, y=50)
-        closeButton.place(x=177, y=125)
-        pass_highlow.place(x=250, y=100)
+        updateButton.place(x=175, y=150)
+        closeButton.place(x=177, y=200)
+        pass_highlow.place(x=350, y=100)
 
-
+        #the things needed to update it
         root.quit()
         print("weather updated")
         root.mainloop()
